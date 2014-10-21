@@ -29,8 +29,8 @@ func main() {
 }
 
 func BFS(graph map[int]*Node, current int, prec int, distance int) []int {
-  q = queue.NewQueue(0)
-  e = make([]int, 0)
+  q := queue.NewQueue(1)
+  e := make([]int, 0)
 
   graph[current].visited = true
   graph[current].distance = distance

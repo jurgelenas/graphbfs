@@ -13,8 +13,6 @@ type Node struct {
 }
 
 func main() {
-  q := queue.NewQueue(1)
-  blackQueue := queue.NewQueue(1)
   graph := make(map[int]*Node)
   graph[1] = &Node{adjacents: []int{2,8}, prec: -1, distance: -1, visited: false}
   graph[2] = &Node{adjacents: []int{1,3}, prec: -1, distance: -1, visited: false}
@@ -27,18 +25,20 @@ func main() {
   graph[9] = &Node{adjacents: []int{8}, prec: -1, distance: -1, visited: false}
 
   distance := 0
-  BFS(q, blackQueue, graph, 1, 1, distance)
+  fmt.Println(BFS(graph, 1, 1, distance))
 }
 
-func BFS(queue *queue.Queue, blackQueue *queue.Queue, graph map[int]*Node, current int, prec int, distance int) {
+func BFS(graph map[int]*Node, current int, prec int, distance int) []int {
+  q = queue.NewQueue(0)
+  e = make([]int, 0)
+
   graph[current].visited = true
   graph[current].distance = distance
   graph[current].prec = 1
+  q.Push(current)
 
-  queue.Push(current)
-
-  for queue.Count() > 0 {
-    key, _ := queue.Pop()
+  for q.Count() > 0 {
+    key, _ := q.Pop()
 
     for _, adj := range graph[key].adjacents {
       if ! graph[adj].visited {
@@ -46,12 +46,12 @@ func BFS(queue *queue.Queue, blackQueue *queue.Queue, graph map[int]*Node, curre
         graph[adj].prec = key
         graph[adj].distance += 1
 
-        queue.Push(adj)
+        q.Push(adj)
       }
     }
 
-    blackQueue.Push(key)
+    e = append(e, key)
   }
 
-  fmt.Println(blackQueue)
+  return e
 }
